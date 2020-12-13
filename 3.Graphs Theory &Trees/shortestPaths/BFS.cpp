@@ -9,13 +9,15 @@ const int MAXN = 100010;
 
 ll n, m;
 vector<vector<ll>> adj;
-ll dist[MAXN];
+ll dist[MAXN], par[MAXN];
 bool visited[MAXN];
 
 void bfs(ll src)
 {
     for (ll i = 0; i < MAXN; i++)
         dist[i] = INF;
+    memset(par, -1, sizeof(par));
+
     dist[src] = 0;
     visited[src] = true;
     queue<ll> q;
@@ -30,10 +32,22 @@ void bfs(ll src)
             {
                 visited[child] = true;
                 dist[child] = dist[cur] + 1;
+                par[child] = cur;
                 q.push(child);
             }
         }
     }
+}
+vector<ll> getPath(ll des)
+{
+    vector<ll> path;
+    path.push_back(des);
+    while (par[des] != -1)
+    {
+        path.push_back(par[des]);
+        des = par[des];
+    }
+    return path;
 }
 
 void read()
@@ -53,6 +67,13 @@ int main()
 {
     read();
     bfs(1);
+
+    vector<ll> path = getPath(5);
+    for (ll i = 0; i < path.size(); i++)
+    {
+        cout << path[i] << " ";
+    }
+    cout << endl;
     for (ll i = 1; i <= n; i++)
         cout << dist[i] << " ";
 }

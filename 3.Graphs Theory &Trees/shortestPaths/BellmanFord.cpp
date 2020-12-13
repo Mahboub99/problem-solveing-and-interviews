@@ -9,13 +9,13 @@ const int MAXN = 100010;
 
 struct edge
 {
-    ll src, dis, wight;
-    edge(ll u, ll v, ll w) : src(u), dis(v), wight(w){};
+    ll src, des, wight;
+    edge(ll u, ll v, ll w) : src(u), des(v), wight(w){};
 };
 
 ll n, m;
 vector<edge> edges;
-ll dist[MAXN];
+ll dest[MAXN];
 
 void read()
 {
@@ -34,13 +34,13 @@ void read()
 void Bellman_Ford(ll src)
 {
     for (ll i = 0; i < MAXN; i++)
-        dist[i] = INF;
-    dist[src] = 0;
+        dest[i] = INF;
+    dest[src] = 0;
     for (ll i = 1; i <= n - 1; i++)
     {
         for (auto e : edges)
         {
-            dist[e.dis] = min(dist[e.dis], dist[e.src] + e.wight);
+            dest[e.des] = min(dest[e.des], dest[e.src] + e.wight);
         }
     }
 }
@@ -49,5 +49,5 @@ int main()
     read();
     Bellman_Ford(1);
     for (ll i = 1; i <= n; i++)
-        cout << dist[i] << " ";
+        cout << dest[i] << " ";
 }
