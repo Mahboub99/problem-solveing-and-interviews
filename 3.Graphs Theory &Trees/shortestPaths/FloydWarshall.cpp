@@ -8,7 +8,7 @@ using namespace std;
 const int MAXN = 100;
 
 ll n, m;
-ll adj[MAXN][MAXN], dis[MAXN][MAXN];
+ll adj[MAXN][MAXN], dist[MAXN][MAXN];
 
 void Floyd_Warshall()
 {
@@ -16,22 +16,21 @@ void Floyd_Warshall()
     for (ll i = 1; i <= n; i++)
         for (ll j = 1; j <= n; j++)
             if (i == j)
-                dis[i][j] = 0;
+                dist[i][j] = 0;
             else if (adj[i][j])
-                dis[i][j] = adj[i][j];
+                dist[i][j] = adj[i][j];
             else
-                dis[i][j] = INF;
+                dist[i][j] = INF;
 
     for (ll k = 1; k <= n; k++)
         for (ll i = 1; i <= n; i++)
             for (ll j = 1; j <= n; j++)
-                dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
 }
 void read()
 {
     cin >> n >> m;
     ll u, v, w;
-    adj.resize(n + 1);
     for (ll i = 0; i < m; i++)
     {
         cin >> u >> v >> w;
@@ -43,15 +42,15 @@ int main()
 {
     // just for testing
     read();
-    Dijkstra(1);
-    vector<ll> path = getPath(3);
-    for (ll i = 0; i < path.size(); i++)
+    Floyd_Warshall();
+    for (int i = 1; i <= n; ++i)
     {
-        cout << path[i] << " ";
+        for (int j = 1; j <= n; ++j)
+        {
+            cout << dist[i][j] << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
-    for (ll i = 1; i <= n; i++)
-        cout << dist[i] << " ";
 }
 /*
      5 6
