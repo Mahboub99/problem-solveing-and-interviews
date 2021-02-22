@@ -16,9 +16,11 @@ void Dijkstra(ll src)
 {
     for (ll i = 0; i < MAXN; i++)
         dist[i] = INF;
+    for (ll i = 0; i < MAXN; i++)
+        visited[i] = false;
     memset(par, -1, sizeof(par));
+
     dist[src] = 0;
-    visited[src] = true;
     priority_queue<pair<ll, ll>> q;
     q.push({0, src});
 
@@ -26,19 +28,18 @@ void Dijkstra(ll src)
     {
         ll cur = q.top().second;
         q.pop();
+        if (visited[cur])
+            continue;
+        visited[cur] = true;
+
         for (auto child : adj[cur])
         {
             ll des = child.first, w = child.second;
-
-            if (!visited[des])
+            if (dist[cur] + w < dist[des])
             {
                 par[des] = cur;
-                visited[des] = true;
-                if (dist[cur] + w < dist[des])
-                {
-                    dist[des] = min(dist[des], dist[cur] + w);
-                    q.push({-dist[des], des});
-                }
+                dist[des] = dist[cur] + w;
+                q.push({-dist[des], des});
             }
         }
     }
@@ -52,6 +53,7 @@ vector<ll> getPath(ll des)
         path.push_back(par[des]);
         des = par[des];
     }
+    reverse(path.begin(), path.end());
     return path;
 }
 
