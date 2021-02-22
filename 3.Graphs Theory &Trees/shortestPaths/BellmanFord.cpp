@@ -15,7 +15,7 @@ struct edge
 
 ll n, m;
 vector<edge> edges;
-ll dest[MAXN];
+ll dist[MAXN], par[MAXN];
 
 void read()
 {
@@ -34,20 +34,38 @@ void read()
 void Bellman_Ford(ll src)
 {
     for (ll i = 0; i < MAXN; i++)
-        dest[i] = INF;
-    dest[src] = 0;
+        dist[i] = INF;
+    dist[src] = 0;
     for (ll i = 1; i <= n - 1; i++)
     {
         for (auto e : edges)
         {
-            dest[e.des] = min(dest[e.des], dest[e.src] + e.wight);
+            if (dist[e.src] + e.wight < e.des)
+            {
+                par[e.des] = e.src;
+                dist[e.des] = dist[e.src] + e.wight;
+            }
         }
     }
 }
+
+vector<ll> getPath(ll des)
+{
+    vector<ll> path;
+    path.push_back(des);
+    while (par[des] != -1)
+    {
+        path.push_back(par[des]);
+        des = par[des];
+    }
+    reverse(path.begin(), path.end());
+    return path;
+}
+
 int main()
 {
     read();
     Bellman_Ford(1);
     for (ll i = 1; i <= n; i++)
-        cout << dest[i] << " ";
+        cout << dist[i] << " ";
 }
