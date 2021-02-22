@@ -1,3 +1,7 @@
 .exe
 .vs
 .vscode
+*.exe
+*.xml
+*.iml
+*.ipynb
