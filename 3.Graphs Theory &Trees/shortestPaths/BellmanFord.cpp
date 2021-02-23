@@ -40,7 +40,7 @@ void Bellman_Ford(ll src)
     {
         for (auto e : edges)
         {
-            if (dist[e.src] + e.wight < e.des)
+            if (dist[e.src] + e.wight < dist[e.des])
             {
                 par[e.des] = e.src;
                 dist[e.des] = dist[e.src] + e.wight;
