@@ -3,7 +3,8 @@
 using namespace std;
 
 #define ll long long int
-const int MAXN = 2 * (1 << 20); // first power of 2 after 1e6 as max n we should make the size is power of 2 and the tree is 2*szie
+// first power of 2 after 1e6 as max n we should make the size is power of 2 and the tree is 2* size
+const int MAXN = 2 * (1 << 20);
 
 ll n; // actual size of the array
 ll tree[MAXN];
