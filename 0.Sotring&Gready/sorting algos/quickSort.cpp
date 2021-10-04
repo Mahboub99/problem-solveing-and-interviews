@@ -3,35 +3,29 @@
 
 using namespace std;
 
-int partion(vector<int> &vec, int start, int end)
-{
-    int x = (end - start + 1);
-    int random = rand() % x + start;
-    swap(vec[end], vec[random]);
 
-    int pivote = vec[end];
-    int i = start - 1;
+int paration(vector<int> &vec, int start, int end) {
+    int pivot = vec[start];
+    int i = start, j = end;
 
-    for (int j = start; j <= end - 1; j++)
-    {
-        if (vec[j] <= pivote)
-        {
-            i++;
-            if (i != j)
-                swap(vec[j], vec[i]);
-        }
+    while (i < j) {
+        while (vec[i] <= pivot) i++;
+        while (vec[j] > pivot) j--;
+        if (i < j) swap(vec[i], vec[j]);
     }
-    swap(vec[end], vec[i + 1]);
+    swap(vec[start], vec[j]);
 
-    return i + 1;
+    return j;
 }
-void quickSort(vector<int> &vec, int start, int end)
-{
 
-    if (start < end)
-    {
-        int pivote = partion(vec, start, end);
-        quickSort(vec, start, pivote - 1);
-        quickSort(vec, pivote + 1, end);
+void quickSort(vector<int> &vec, int start, int end) {
+    if (start < end) {
+        int pivot = paration(vec, start, end);
+        quickSort(vec, start, pivot);
+        quickSort(vec, pivot + 1, end);
     }
+}
+
+void quickSort(vector<int> &vec) {
+    quickSort(vec, 0, vec.size() - 1);
 }
